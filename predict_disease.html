@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Plant Disease</title>
+
+    <style>
+        /* General Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5; /* Soft gray background */
+            color: #333; /* Dark text color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* Main container */
+        .main {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Header */
+        .header h1 {
+            margin: 0;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: black; /* Blue text color */
+        }
+
+        /* File upload container */
+        .upload-container {
+            width: 100%;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Predict Button */
+        .predict-btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: green; /* Green button */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .predict-btn:hover {
+            background-color: rgb(120, 196, 120); /* Darker green on hover */
+        }
+
+        /* Results Section */
+        .results {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .results h3, .results h4, .results p {
+            margin: 10px 0;
+        }
+
+        .results img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        /* Footer Text */
+        .footer-text {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .footer-text a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 500px) {
+            .main {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .predict-btn {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            <h1>Predict Plant Disease</h1>
+        </div>
+        <div class="upload-container">
+            <form action="/predict_disease" method="post" enctype="multipart/form-data">
+                <div class="input-group">
+                    <label for="file">Upload an Image</label>
+                    <input type="file" id="file" name="file" accept="image/*" required>
+                </div>
+                <button type="submit" class="predict-btn">Predict</button>
+            </form>
+        </div>
+
+        {% if prediction %}
+        <div class="results">
+            <h3>Prediction:</h3>
+            <p>{{ prediction }}</p>
+            
+            {% if recommended_fertilizer %}
+                <h4>Fertilizer Recommendation:</h4>
+                <p>{{ recommended_fertilizer }}</p>
+            {% else %}
+                <p>Your crop is healthy. No fertilizer recommendation needed!</p>
+            {% endif %}
+            
+            <h4>Uploaded Image:</h4>
+            <img src="/static/uploads/{{ image_path }}" alt="Uploaded Image">
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
