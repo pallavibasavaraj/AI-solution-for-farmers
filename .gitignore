@@ -1,0 +1,6 @@
+"*/" 
+"!my_flask_app/" 
+"*.log" 
+"AppData/" 
+"*.DS_Store" 
+"*.exe" 
